@@ -16,7 +16,7 @@ export class FleetComponent implements OnInit {
     constructor(private route: ActivatedRoute, private fleetsService: FleetsService) {}
 
     ngOnInit(): void {
-        const fleetID = parseInt(this.route.snapshot.paramMap.get('id') as string);
+        const fleetID = this.route.snapshot.paramMap.get('id') as string;
         this.fleetsService.getFleet(fleetID).subscribe(fleet => {
             this.fleet = fleet;
         });

@@ -25,7 +25,7 @@ export class FleetsService {
         );
     }
 
-    getFleet(id: number): Observable<Fleet | null> {
+    getFleet(id: string): Observable<Fleet | null> {
         const url = `/api/fleets/${id}`;
         return this.http.get<Fleet>(url).pipe(
             map(json => {
@@ -37,7 +37,7 @@ export class FleetsService {
         );
     }
 
-    getFleetVessels(id: number): Observable<Vessel[]> {
+    getFleetVessels(id: string): Observable<Vessel[]> {
         const url = `/api/fleets/${id}/vessels`;
         return this.http.get<Vessel[]>(url).pipe(
             map(json => {

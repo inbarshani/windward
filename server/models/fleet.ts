@@ -1,11 +1,18 @@
 import { Expose, Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 import { VesselQuery } from './vessel';
 
+class VesselRef {
+    @Expose() @IsString() value: number;
+    @Expose() @IsString() _id: string;
+}
 export class Fleet {
-    @Expose() @IsNumber() id: number = 0;
+    @Expose() @IsString() _id: string = '';
     @Expose() @IsString() name: string = '';
-    @Expose({ toPlainOnly: true }) @IsNumber() vesselsCount: number = 0;
+    @Expose({ toClassOnly: true }) @Type(() => VesselRef) @IsArray() vessels: VesselRef[] = [];
+    @Expose({ toPlainOnly: true }) get vesselsCount(): number {
+        return this.vessels.length;
+    }
 }
 
 export class FleetQuery {

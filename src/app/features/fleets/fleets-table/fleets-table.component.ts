@@ -13,6 +13,7 @@ export class FleetsTableComponent implements OnInit {
 
     filterByVesselName = '';
     filterByVesselFlag = '';
+    filterByVesselMmsi = '';
 
     constructor(private fleetsService: FleetsService) {}
 
@@ -32,6 +33,12 @@ export class FleetsTableComponent implements OnInit {
             }
             if (this.filterByVesselFlag) {
                 fleetQuery.vesselsQuery.flag = this.filterByVesselFlag;
+            }
+            if (this.filterByVesselMmsi) {
+                const mmsi = parseInt(this.filterByVesselMmsi);
+                if (!Number.isNaN(mmsi)) {
+                    fleetQuery.vesselsQuery.mmsi = mmsi;
+                }
             }
         }
 

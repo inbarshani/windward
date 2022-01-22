@@ -9,6 +9,10 @@
             <h4>Vessel flag:</h4>
             <input type="text" #vesselFlag (keyup)="filterByVesselFlag = vesselFlag.value" />
         </div>
+        <div class="flex filter-field">
+            <h4>Vessel MMSI:</h4>
+            <input type="text" #vesselMmsi (keyup)="filterByVesselMmsi = vesselMmsi.value" />
+        </div>
         <p-button label="Filter" (onClick)="filter()"></p-button>
     </div>
     <div class="table">
@@ -19,12 +23,16 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
+                    <th>Vessels Count</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-fleet>
                 <tr>
                     <td>
-                        <a routerLink="/fleet/{{ fleet.id }}">{{ fleet.name }}</a>
+                        <a routerLink="/fleet/{{ fleet._id }}">{{ fleet.name }}</a>
+                    </td>
+                    <td>
+                        {{ fleet.vesselsCount }}
                     </td>
                 </tr>
             </ng-template>
