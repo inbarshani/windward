@@ -5,12 +5,16 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
+                    <th>Flag</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-vessle>
                 <tr>
                     <td>
                         {{ vessle.name }}
+                    </td>
+                    <td>
+                        {{ vessle.flag }}
                     </td>
                 </tr>
             </ng-template>

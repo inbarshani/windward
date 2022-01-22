@@ -2,16 +2,16 @@ import { Expose } from 'class-transformer';
 import { IsNumber, IsString } from 'class-validator';
 
 export class Vessel {
-    @Expose() @IsNumber() id: number;
-    @Expose() @IsString() name: string;
-    @Expose() @IsString() flag: string;
+    @Expose() @IsNumber() id: number = 0;
+    @Expose() @IsString() name: string = '';
+    @Expose() @IsString() flag: string = '';
 
-    @Expose({ toClassOnly: true }) @IsNumber() fleetID: number;
+    @Expose({ toClassOnly: true }) @IsNumber() fleetID: number = 0;
 }
 
 export class VesselQuery {
-    @Expose() @IsString() name: string;
-    @Expose() @IsString() flag: string;
+    @Expose() @IsString() name: string = '';
+    @Expose() @IsString() flag: string = '';
 
     isMatch(vessel: Vessel): boolean {
         let isMatch = true;

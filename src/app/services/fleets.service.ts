@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Fleet } from '../models/fleet';
+import { Fleet, FleetQuery } from '../models/fleet';
 import { Vessel } from '../models/vessely';
 
 @Injectable({
@@ -10,8 +10,11 @@ import { Vessel } from '../models/vessely';
 export class FleetsService {
     constructor(private http: HttpClient) {}
 
-    getFleets(): Observable<Fleet[]> {
-        const url = '/api/fleets';
+    getFleets(query?: FleetQuery): Observable<Fleet[]> {
+        let url = '/api/fleets';
+        if (query) {
+            url = url + `?filter=${JSON.stringify(query)}`;
+        }
         return this.http.get<Fleet[]>(url).pipe(
             map(json => {
                 if (json) {

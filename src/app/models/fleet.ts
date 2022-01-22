@@ -1,3 +1,5 @@
+import { VesselQuery } from './vessely';
+
 export class Fleet {
     name: string = '';
     id: number = 0;
@@ -7,4 +9,8 @@ export class Fleet {
             Object.assign(this, json);
         }
     }
+}
+
+export class FleetQuery {
+    vesselsQuery: VesselQuery | undefined = undefined;
 }

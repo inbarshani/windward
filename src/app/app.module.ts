@@ -7,11 +7,14 @@ import { PageNotFoundComponent } from './features/page-not-found/page-not-found.
 
 import { TableModule } from 'primeng/table';
 import { FleetsTableComponent } from './features/fleets/fleets-table/fleets-table.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+
 import { FleetComponent } from './features/fleets/fleet/fleet.component';
 
 @NgModule({
     declarations: [AppComponent, PageNotFoundComponent, FleetsTableComponent, FleetComponent],
-    imports: [BrowserModule, AppRoutingModule, HttpClientModule, TableModule],
+    imports: [BrowserModule, AppRoutingModule, HttpClientModule, TableModule, InputTextModule, ButtonModule],
     providers: [],
     bootstrap: [AppComponent]
 })
