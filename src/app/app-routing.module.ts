@@ -7,6 +7,11 @@ import { PageNotFoundComponent } from './features/page-not-found/page-not-found.
 const routes: Routes = [
     {
         path: '',
+        redirectTo: '/fleets',
+        pathMatch: 'full'
+    },
+    {
+        path: 'fleets',
         component: FleetsTableComponent
     },
     {
