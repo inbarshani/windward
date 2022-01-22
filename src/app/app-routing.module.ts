@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FleetsComponent } from './features/fleets/fleets.component';
+import { FleetComponent } from './features/fleets/fleet/fleet.component';
+import { FleetsTableComponent } from './features/fleets/fleets-table/fleets-table.component';
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: FleetsComponent
+        component: FleetsTableComponent
+    },
+    {
+        path: 'fleet/:id',
+        component: FleetComponent
     },
     { path: '**', component: PageNotFoundComponent }
 ];
