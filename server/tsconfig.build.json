@@ -3,10 +3,8 @@
     "exclude": ["test", "**/*spec.ts"],
     "compilerOptions": {
         "module": "CommonJS",
-        "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
         "target": "es2017",
         "sourceMap": true,
         "outDir": "../dist/server",
