@@ -49,17 +49,16 @@ export class FleetsService {
                 const idToFleet = {};
                 this.vessels.forEach(vessel => {
                     if (query.vesselsQuery.isMatch(vessel)) {
-                        const fleet = this.fleets.find(fleet => {
-                            return (
+                        this.fleets.forEach(fleet => {
+                            const hasVessel =
                                 fleet.vessels &&
                                 fleet.vessels.find(vesselRef => {
                                     return vesselRef._id === vessel._id;
-                                }) !== undefined
-                            );
+                                }) !== undefined;
+                            if (hasVessel && !idToFleet[fleet._id]) {
+                                idToFleet[fleet._id] = fleet;
+                            }
                         });
-                        if (fleet && !idToFleet[fleet._id]) {
-                            idToFleet[fleet._id] = fleet;
-                        }
                     }
                 });
                 filteredFleets = Object.values(idToFleet);
