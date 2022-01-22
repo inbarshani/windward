@@ -1,4 +1,4 @@
-import { VesselQuery } from './vessely';
+import { VesselQuery } from './vessel';
 
 export class Fleet {
     name: string = '';
