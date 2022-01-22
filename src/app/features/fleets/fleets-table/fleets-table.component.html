@@ -13,6 +13,9 @@
     </div>
     <div class="table">
         <p-table [value]="fleets" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="caption">
+                <h4>Showing {{ fleets.length }} fleets</h4>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
