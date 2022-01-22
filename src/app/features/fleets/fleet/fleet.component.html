@@ -1,0 +1,19 @@
+<div class="full-page flex column" *ngIf="fleet">
+    <h1>Fleet: {{ fleet.name }}</h1>
+    <div class="table">
+        <p-table [value]="vessels" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-vessle>
+                <tr>
+                    <td>
+                        {{ vessle.name }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

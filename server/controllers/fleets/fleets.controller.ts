@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { ParamId } from '../../decorators/params.decorator';
 import { FleetsService } from '../../services/fleets/fleets.service';
 
 @Controller('fleets')
@@ -7,6 +8,11 @@ export class FleetsController {
 
     @Get()
     async getFleets() {
-        return this.fleetsService.getFleets();
+        return await this.fleetsService.getFleets();
+    }
+
+    @Get(':id')
+    async getFleet(@ParamId('id') fleetID: number) {
+        return await this.fleetsService.getFleet(fleetID);
     }
 }

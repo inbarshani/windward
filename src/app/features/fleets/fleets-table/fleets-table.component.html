@@ -1,0 +1,19 @@
+<div class="full-page flex column">
+    <h1>Fleets</h1>
+    <div class="table">
+        <p-table [value]="fleets" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-fleet>
+                <tr>
+                    <td>
+                        <a routerLink="/fleet/{{ fleet.id }}">{{ fleet.name }}</a>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

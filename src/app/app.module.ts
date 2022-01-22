@@ -3,12 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FleetsComponent } from './features/fleets/fleets.component';
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
 
+import { TableModule } from 'primeng/table';
+import { FleetsTableComponent } from './features/fleets/fleets-table/fleets-table.component';
+import { FleetComponent } from './features/fleets/fleet/fleet.component';
+
 @NgModule({
-    declarations: [AppComponent, FleetsComponent, PageNotFoundComponent],
-    imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+    declarations: [AppComponent, PageNotFoundComponent, FleetsTableComponent, FleetComponent],
+    imports: [BrowserModule, AppRoutingModule, HttpClientModule, TableModule],
     providers: [],
     bootstrap: [AppComponent]
 })
