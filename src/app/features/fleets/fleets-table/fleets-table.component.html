@@ -1,5 +1,16 @@
 <div class="full-page flex column">
     <h1>Fleets</h1>
+    <div class="flex column filter">
+        <div class="flex filter-field">
+            <h4>Vessel name:</h4>
+            <input type="text" #vesselName (keyup)="filterByVesselName = vesselName.value" />
+        </div>
+        <div class="flex filter-field">
+            <h4>Vessel flag:</h4>
+            <input type="text" #vesselFlag (keyup)="filterByVesselFlag = vesselFlag.value" />
+        </div>
+        <p-button label="Filter" (onClick)="filter()"></p-button>
+    </div>
     <div class="table">
         <p-table [value]="fleets" styleClass="p-datatable-gridlines">
             <ng-template pTemplate="header">

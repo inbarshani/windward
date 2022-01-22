@@ -1,5 +1,6 @@
 export class Vessel {
     name: string = '';
+    flag: string = '';
     id: number = 0;
     fleetID: number = 0;
 
@@ -8,4 +9,9 @@ export class Vessel {
             Object.assign(this, json);
         }
     }
+}
+
+export class VesselQuery {
+    name?: string = undefined;
+    flag?: string = undefined;
 }

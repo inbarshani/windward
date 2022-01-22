@@ -3,7 +3,15 @@ h1 {
     text-align: center;
 }
 
+.filter,
 .table {
     margin: 20px auto;
     width: 80%;
+}
+
+.filter-field {
+    margin-bottom: 20px;
+    *:not(:last-child) {
+        margin-right: 20px;
+    }
 }
