@@ -1,13 +1,14 @@
 # Windward
 
-Home assignment.
-Implemntation is based on Nest.js (sever) and Angular (Web app).
-Server is exposing API only and is listening for incoming requests on port 3000.
+Home assignment.<br />
+Implemntation is based on Nest.js (sever) and Angular (Web app).<br />
+Server is exposing API only and is listening for incoming requests on port 3000.<br />
 
 ## Run
 
-On Windows, use `run.bat`.
-Otherwise, run `npm run startDev`.
+Clone the repository and install with `npm i`.<br />
+On Windows, use `run.bat`.<br />
+Otherwise, run `npm run startDev`.<br />
 Angular is running with its own Web server, proxying API requests to the Nest.js server.
 
 # Server API
