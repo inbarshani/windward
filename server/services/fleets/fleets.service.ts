@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { readFileSync } from 'fs';
+import { readFile, readFileSync } from 'fs';
 import { Fleet } from '../../models/fleet';
 import { Vessel } from '../../models/vessel';
 
@@ -19,19 +19,26 @@ export class FleetsService {
     async init() {
         // load json file
         try {
-            const fleetsData = await readFileSync(FLEETS_DATA_FILE).toString();
-            const fleetsJSON = JSON.parse(fleetsData);
-            if (fleetsJSON && Array.isArray(fleetsJSON)) {
-                this.fleets = fleetsJSON.map(fleetJSON => {
-                    return plainToClass(Fleet, fleetJSON);
-                });
-            }
-
             const vesselsData = await readFileSync(VESSELS_DATA_FILE).toString();
             const vesselsJSON = JSON.parse(vesselsData);
             if (vesselsJSON && Array.isArray(vesselsJSON)) {
                 this.vessels = vesselsJSON.map(vesselJSON => {
                     return plainToClass(Vessel, vesselJSON);
+                });
+            }
+
+            const fleetsData = await readFileSync(FLEETS_DATA_FILE).toString();
+            const fleetsJSON = JSON.parse(fleetsData);
+            if (fleetsJSON && Array.isArray(fleetsJSON)) {
+                this.fleets = fleetsJSON.map(fleetJSON => {
+                    const fleet = plainToClass(Fleet, fleetJSON);
+                    fleet.vesselsCount = this.vessels.reduce((counter, vessel) => {
+                        if (vessel.fleetID === fleet.id) {
+                            counter++;
+                        }
+                        return counter;
+                    }, 0);
+                    return fleet;
                 });
             }
         } catch (ex) {
