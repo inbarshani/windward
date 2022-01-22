@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { readFile, readFileSync } from 'fs';
-import { Fleet } from '../../models/fleet';
+import { Fleet, FleetQuery } from '../../models/fleet';
 import { Vessel } from '../../models/vessel';
 
 const FLEETS_DATA_FILE = './data/fleets.json';
@@ -47,8 +47,25 @@ export class FleetsService {
         }
     }
 
-    async getFleets(): Promise<Fleet[]> {
-        return this.fleets;
+    async getFleets(query?: FleetQuery): Promise<Fleet[]> {
+        if (query) {
+            let filteredFleets: Fleet[] = this.fleets;
+            if (query.vesselsQuery) {
+                const fleetIDs = new Set();
+                this.vessels.forEach(vessel => {
+                    if (!fleetIDs.has(vessel.fleetID)) {
+                        if (query.vesselsQuery.isMatch(vessel)) {
+                            fleetIDs.add(vessel.fleetID);
+                        }
+                    }
+                });
+                filteredFleets = this.fleets.filter(fleet => fleetIDs.has(fleet.id));
+            }
+            // TODO: filter on the fleet fields
+            return filteredFleets;
+        } else {
+            return this.fleets;
+        }
     }
 
     async getFleet(fleetID: number): Promise<Fleet> {
