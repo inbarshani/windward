@@ -1,27 +1,28 @@
 # Windward
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.15.
+Home assignment.
+Implemntation is based on Nest.js (sever) and Angular (Web app).
+Server is exposing API only and is listening for incoming requests on port 3000.
 
-## Development server
+## Run
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+On Windows, use `run.bat`.
+Otherwise, run `npm run startDev`.
+Angular is running with its own Web server, proxying API requests to the Nest.js server.
 
-## Code scaffolding
+# Server API
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+-   GET /api/fleets, /api/fleets?filter={} - return a collection of fleet entities, with an optional filter (query) of the fleets
+-   GET /api/fleets/:id - return a fleet by its ID
+-   GET /api/fleets/:id/vessels - return the collection of vessels of a specific fleet
 
-## Build
+# Web app pages
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+-   /, /fleets - show a table of all fleets
+-   /fleet/:id - show the details of a specific fleet, including its vessels
 
-## Running unit tests
+# Implemntation notes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Data
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Server data is loaded directly from JSON files and the server's FleetsService (fleets.service.ts) is simulating queries and processing of the data.
