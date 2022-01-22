@@ -1,11 +1,22 @@
 <div class="full-page flex column" *ngIf="fleet">
     <h1>Fleet: {{ fleet.name }}</h1>
     <div class="table">
-        <p-table [value]="vessels" styleClass="p-datatable-gridlines">
+        <p-table [value]="vessels" styleClass="p-datatable-gridlines" [globalFilterFields]="['name', 'flag']">
+            <ng-template pTemplate="caption">
+                <h4>Showing {{ vessels.length }} vessels</h4>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
                     <th>Flag</th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-columnFilter type="text" field="name"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="flag"></p-columnFilter>
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-vessle>
