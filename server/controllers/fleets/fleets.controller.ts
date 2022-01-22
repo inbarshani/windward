@@ -1,6 +1,5 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { plainToClass } from 'class-transformer';
-import { ParamId } from '../../decorators/params.decorator';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { instanceToPlain, plainToClass } from 'class-transformer';
 import { FleetQuery } from '../../models/fleet';
 import { FleetsService } from '../../services/fleets/fleets.service';
 
@@ -14,12 +13,12 @@ export class FleetsController {
             const fleetQuery = plainToClass(FleetQuery, JSON.parse(filter), { excludeExtraneousValues: true });
             return await this.fleetsService.getFleets(fleetQuery);
         } else {
-            return await this.fleetsService.getFleets();
+            return (await this.fleetsService.getFleets()).map(fleet => instanceToPlain(fleet));
         }
     }
 
     @Get(':id')
-    async getFleet(@ParamId('id') fleetID: number) {
-        return await this.fleetsService.getFleet(fleetID);
+    async getFleet(@Param('id') fleetID: string) {
+        return instanceToPlain(await this.fleetsService.getFleet(fleetID));
     }
 }

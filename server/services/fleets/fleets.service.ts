@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { readFile, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { Fleet, FleetQuery } from '../../models/fleet';
 import { Vessel } from '../../models/vessel';
 
@@ -31,14 +31,7 @@ export class FleetsService {
             const fleetsJSON = JSON.parse(fleetsData);
             if (fleetsJSON && Array.isArray(fleetsJSON)) {
                 this.fleets = fleetsJSON.map(fleetJSON => {
-                    const fleet = plainToClass(Fleet, fleetJSON);
-                    fleet.vesselsCount = this.vessels.reduce((counter, vessel) => {
-                        if (vessel.fleetID === fleet.id) {
-                            counter++;
-                        }
-                        return counter;
-                    }, 0);
-                    return fleet;
+                    return plainToClass(Fleet, fleetJSON);
                 });
             }
         } catch (ex) {
@@ -51,15 +44,24 @@ export class FleetsService {
         if (query) {
             let filteredFleets: Fleet[] = this.fleets;
             if (query.vesselsQuery) {
-                const fleetIDs = new Set();
+                // go through vessels to find mathcing vessels, then derive the fleet for the matched vessel
+                // keep a mapping of fleet IDs to fleet - helps avoid another search on the fleets array, and avoid duplicating fleets in results
+                const idToFleet = {};
                 this.vessels.forEach(vessel => {
-                    if (!fleetIDs.has(vessel.fleetID)) {
-                        if (query.vesselsQuery.isMatch(vessel)) {
-                            fleetIDs.add(vessel.fleetID);
-                        }
+                    if (query.vesselsQuery.isMatch(vessel)) {
+                        this.fleets.forEach(fleet => {
+                            const hasVessel =
+                                fleet.vessels &&
+                                fleet.vessels.find(vesselRef => {
+                                    return vesselRef._id === vessel._id;
+                                }) !== undefined;
+                            if (hasVessel && !idToFleet[fleet._id]) {
+                                idToFleet[fleet._id] = fleet;
+                            }
+                        });
                     }
                 });
-                filteredFleets = this.fleets.filter(fleet => fleetIDs.has(fleet.id));
+                filteredFleets = Object.values(idToFleet);
             }
             // TODO: filter on the fleet fields
             return filteredFleets;
@@ -68,20 +70,20 @@ export class FleetsService {
         }
     }
 
-    async getFleet(fleetID: number): Promise<Fleet> {
-        // verify there is such a fleet
+    async getFleet(fleetID: string): Promise<Fleet> {
         const fleet = this.fleets.find(fleet => {
-            return fleet.id === fleetID;
+            return fleet._id === fleetID;
         });
         return fleet;
     }
 
-    async getFleetVessels(fleetID: number): Promise<Vessel[]> {
-        // verify there is such a fleet
-        const fleet = this.getFleet(fleetID);
+    async getFleetVessels(fleetID: string): Promise<Vessel[]> {
+        const fleet = await this.getFleet(fleetID);
         if (!fleet) {
             return [];
         }
-        return this.vessels.filter(vessel => vessel.fleetID === fleetID);
+        return this.vessels.filter(vessel => {
+            return fleet.vessels.find(vesselRef => vesselRef._id === vessel._id) !== undefined;
+        });
     }
 }

@@ -4,7 +4,9 @@
     "compilerOptions": {
         "baseUrl": "./",
         "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "target": "ES2017",
+        "moduleResolution": "node"
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

@@ -1,8 +1,9 @@
-import { VesselQuery } from './vessely';
+import { VesselQuery } from './vessel';
 
 export class Fleet {
     name: string = '';
-    id: number = 0;
+    _id: string = '';
+    vesselsCount: number = 0;
 
     constructor(json: any) {
         if (json) {
